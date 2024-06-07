@@ -1,9 +1,13 @@
 package datalab.reinfect.tour.utilities;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -25,6 +29,13 @@ public class Common {
         }
 
         return builder.toString();
+    }
+
+    public String readHtmlEmailResource(String fileName) throws IOException {
+        ClassPathResource resource = new ClassPathResource("static/assets/email/" + fileName);
+        byte[] fileBytes = Files.readAllBytes(Paths.get(resource.getURI()));
+
+        return new String(fileBytes);
     }
 
     public Map<String, Object> paginate(int currentPage, Page<?> items, String search, String type) {
