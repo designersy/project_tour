@@ -65,6 +65,7 @@ public class SecurityConfiguration {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(request -> {
             request.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                   .dispatcherTypeMatchers(DispatcherType.INCLUDE).permitAll()
                    .requestMatchers(ACCESS_PUBLIC).permitAll()
                    .requestMatchers(ACCESS_GUEST).anonymous()
                    .requestMatchers(ACCESS_MANAGER).hasAuthority("MANAGER")
