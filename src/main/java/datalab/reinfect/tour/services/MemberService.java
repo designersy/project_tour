@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 
 public interface MemberService {
 
-	void register(MemberRegisterForm form);
+	void register(MemberRegisterForm form) throws Exception;
 	void update(Long id);
 	void leave(Long id);
 

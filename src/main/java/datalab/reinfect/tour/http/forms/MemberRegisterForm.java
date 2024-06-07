@@ -3,10 +3,7 @@ package datalab.reinfect.tour.http.forms;
 import datalab.reinfect.tour.enums.UniqueType;
 import datalab.reinfect.tour.http.validators.annotations.FieldMatchCheck;
 import datalab.reinfect.tour.http.validators.annotations.MemberUniqueCheck;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -45,5 +42,11 @@ public class MemberRegisterForm {
 	private String email;
 	
 	private String national;
+
+	@AssertTrue(message = "이용약관에 동의해 주셔야 가입하실 수 있습니다.")
+	private boolean terms;
+
+	@AssertTrue(message = "개인정보 처리방침에 동의해 주셔야 가입하실 수 있습니다.")
+	private boolean privacy;
 	
 }
