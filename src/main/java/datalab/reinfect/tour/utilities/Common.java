@@ -6,10 +6,26 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
 public class Common {
+
+    public String randomString(int length) {
+        StringBuilder builder = new StringBuilder();
+
+        String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        int charsLength = chars.length();
+
+        Random random = new Random();
+
+        for (int i = 0; i < length; i++) {
+            builder.append(chars.charAt(random.nextInt(charsLength)));
+        }
+
+        return builder.toString();
+    }
 
     public Map<String, Object> paginate(int currentPage, Page<?> items, String search, String type) {
         int totalPages = items.getTotalPages();
