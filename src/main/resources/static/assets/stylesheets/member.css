@@ -1,0 +1,56 @@
+div.login-container {
+    width: 100%;
+    max-width: 480px;
+}
+div.register-container {
+    width: 100%;
+    max-width: 680px;
+}
+div.member-container section.section-subject {
+    border-top: 2px solid #1b3354;
+}
+div.member-container section.section-subject > h2 {
+    font-weight: 800;
+    font-size: 1.84rem;
+}
+div.member-container section.section-subject > p {
+    font-weight: 300;
+    font-size: 0.96rem;
+}
+div.member-container > main label.form-label {
+    font-size: 0.96rem;
+    color: #888888;
+}
+div.member-container > main input {
+    border-radius: 0;
+}
+div.member-container > main ul {
+    list-style: none;
+}
+div.member-container > main ul > li {
+    margin-top: 0.4rem;
+}
+div.member-container > main ul > li > a {
+    font-weight: 800;
+    color: #1b3354;
+}
+div.member-container > main button[type="submit"] {
+    font-size: 0.96rem;
+    font-weight: 800;
+}
+div.member-container div.agreement > strong {
+    font-size: 0.96rem;
+    font-weight: 400;
+    color: #888888;
+}
+div.member-container div.agreement > div.content {
+    width: 100%;
+    height: 240px;
+    border: 1px solid #eaeaea;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+div.member-container div.agreement label.form-check-label {
+    font-size: 0.96rem;
+    font-weight: 400;
+}

@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -16,7 +18,7 @@ public class SecurityConfiguration {
 
     private static final String[] ACCESS_PUBLIC = {
         "/",
-        // 로그인 여부 관계없이 모든 사용자가 접근할 페이지 URI 추가하기
+        "/tour",
         "/assets/**",
         "/vendors/**",
         "/favicon.ico"
@@ -24,8 +26,7 @@ public class SecurityConfiguration {
 
     private static final String[] ACCESS_GUEST = {
         "/member/login",
-        "/member/forget/username",
-        "/member/forget/password",
+        "/member/forget",
         "/member/register"
     };
 
@@ -52,7 +53,7 @@ public class SecurityConfiguration {
                  .loginProcessingUrl("/member/login")
                  .usernameParameter("username")
                  .passwordParameter("password")
-                 .defaultSuccessUrl("/")
+                 .successHandler(customAuthenticationSuccessHandler())
                  .failureHandler(new SecurityLoginFailureHandler());
         }).logout(logout -> {
             logout.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
@@ -62,6 +63,14 @@ public class SecurityConfiguration {
         }).exceptionHandling(exception -> {
             exception.accessDeniedHandler(new SecurityAccessDeniedHandler());
         }).build();
+    }
+
+    @Bean
+    protected AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+        SimpleUrlAuthenticationSuccessHandler successHandler = new SimpleUrlAuthenticationSuccessHandler();
+        successHandler.setDefaultTargetUrl("/");
+        successHandler.setAlwaysUseDefaultTargetUrl(true);
+        return successHandler;
     }
 
 }

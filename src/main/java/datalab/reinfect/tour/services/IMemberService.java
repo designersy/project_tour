@@ -68,12 +68,14 @@ public class IMemberService implements MemberService {
 	    	String subject = "[서울유람] 비밀번호 재발급 안내";
 	    	
 	    	Map<String, Object> map = new HashMap<String, Object>();
+            map.put("username", member.getUsername());
+            map.put("nickname", member.getNickname());
 	    	map.put("password", rawPassword);
 	    	
 	    	member.setPassword(newPassword);
 	    	
 	    	repository.save(member);
-	    	notification.mailSend(form.getEmail(), subject, "verify.html", map);
+	    	notification.mailSend(form.getEmail(), subject, "forget.html", map);
     	} catch (IOException exception) {
     		throw new Exception("비밀번호 변경 안내 처리 중 문제가 발생했습니다.");
     	} catch (MessagingException exception) {
