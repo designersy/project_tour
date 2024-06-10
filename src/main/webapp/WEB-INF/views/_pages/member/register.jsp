@@ -95,7 +95,7 @@
                     <div class="form-check">
                         <form:checkbox path="privacy"/>
                         <form:label path="privacy" cssClass="form-check-label">
-                            이용약관에 동의합니다.
+                            개인정보 처리방침에 동의합니다.
                         </form:label>
                         <form:errors path="privacy" cssClass="invalid-feedback d-block"/>
                     </div>

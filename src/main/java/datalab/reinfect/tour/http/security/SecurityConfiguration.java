@@ -34,12 +34,12 @@ public class SecurityConfiguration {
     };
 
     @Bean
-    public PasswordEncoder encoder() {
+    protected PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(request -> {
             request.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                    .dispatcherTypeMatchers(DispatcherType.INCLUDE).permitAll()

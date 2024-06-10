@@ -26,7 +26,7 @@ public class Notification {
         String htmlContent = common.readHtmlEmailResource(template);
 
         for (Map.Entry<String, Object> entry : data.entrySet()) {
-            String placeHolder = "[" + entry.getKey() + "]";
+            String placeHolder = "[[" + entry.getKey() + "]]";
             htmlContent = htmlContent.replace(placeHolder, String.valueOf(entry.getValue()));
         }
 

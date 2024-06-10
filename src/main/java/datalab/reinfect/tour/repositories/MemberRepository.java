@@ -11,6 +11,7 @@ import datalab.reinfect.tour.entities.MemberEntity;
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
 	Optional<MemberEntity> findByUsername(String username);
+	Optional<MemberEntity> findByNicknameAndEmail(String nickname, String email);
 	
 	boolean existsByUsername(String username);
 	boolean existsByNickname(String nickname);
