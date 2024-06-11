@@ -56,6 +56,12 @@ public class TourService {
 		Pageable pageable = PageRequest.of(page,  pagePerTourCount, Sort.by(Sort.Direction.DESC, "id"));
 		return tourRepository.findAll(pageable);
 	}
+	
+	public Page<TourEntity> getMainList() {
+		int pagePerTourCount = 9;
+		Pageable pageable = PageRequest.of(1,  pagePerTourCount, Sort.by(Sort.Direction.DESC, "id"));
+		return tourRepository.findAll(pageable);
+	}
 
 	public TourEntity findById(int id) {
 		Optional<TourEntity> op = tourRepository.findById(id);

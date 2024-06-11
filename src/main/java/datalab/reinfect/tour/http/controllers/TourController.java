@@ -29,22 +29,22 @@ public class TourController {
 	
 	@Autowired
 	private TourService tourService;
-    
-	/* 수정 필요 @@@@@@@@@@@@@@
+   
 	@GetMapping("/")
-	public String main(Model model) {
+	public String tourMain(Model model) {
 		
-		if(!isTourData){
+		List<TourEntity> tempTourList = tourService.findAll();
+		if(tempTourList.isEmpty()){
 			return "tour/insertData";
 		}
 		
 		// 내림차순으로 9개 표시
-		List<TourEntity> tourListMain = tourService.별점순 정렬 함수();
-		model.addAttribute("tourListMain", toruList);
+		Page<TourEntity> paging = tourService.getMainList();
+		model.addAttribute("paging", paging);
 		
 		return "_pages/tour/tourMain";
 	}
-	*/
+	
 	
 	
 	// DB에 저장된 관광지 데이터를 출력하는 tourList 페이지로 연결해주는 라우터

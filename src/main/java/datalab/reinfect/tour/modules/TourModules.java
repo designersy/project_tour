@@ -53,7 +53,7 @@ public class TourModules {
     // 한국어 데이터만을 골라서 dataList에 저장하여 반환하는 함수
     public List<List<String>> dataKo(List<String> data){
     	
-    	List<List<String>> data_list = new ArrayList<List<String>>();
+    	List<List<String>> dataList = new ArrayList<List<String>>();
     	
     	for (int i = 0; i + 14 < data.size(); i++) {
     		if (data.get(i).indexOf("LANG_CODE_ID>ko") != -1) {
@@ -95,11 +95,11 @@ public class TourModules {
     			tempData.add(now);
     			tempData.add(now);
     			
-    			data_list.add(tempData);
+    			dataList.add(tempData);
     		}
     	}
     	
-    	return data_list;
+    	return dataList;
     }
     
     // cutWord 기준으로 입력된 data를 다듬어주는 함수

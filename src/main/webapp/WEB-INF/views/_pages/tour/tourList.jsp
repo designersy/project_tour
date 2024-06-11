@@ -49,15 +49,15 @@
 		</thead>
 	
 		<tbody>
-			<c:forEach items="${paging.content}" var="TourEntity">
+			<c:forEach items="${paging.content}" var="tourEntity">
 				<tr>
-					<td>${TourEntity.POSTSJ}</td>
-					<td>${TourEntity.ADDRESS }</td>
-					<td>${TourEntity.SUBWAYINFO}</td>
-					<td>${TourEntity.CMMNTELNO }</td>
-					<td>${TourEntity.rating}</td>
-					<td>${TourEntity.id }</td>
-					<td><a href="/tour/detail?id=${TourEntity.id}">자세히 보기</a></td>
+					<td>${tourEntity.POSTSJ}</td>
+					<td>${tourEntity.ADDRESS }</td>
+					<td>${tourEntity.SUBWAYINFO}</td>
+					<td>${tourEntity.CMMNTELNO }</td>
+					<td>${tourEntity.rating}</td>
+					<td>${tourEntity.id }</td>
+					<td><a href="/tour/detail?id=${tourEntity.id}">자세히 보기</a></td>
 					<td>사진 들어갈 부분</td>
 				</tr>
 	
