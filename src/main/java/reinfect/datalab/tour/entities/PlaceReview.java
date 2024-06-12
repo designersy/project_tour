@@ -6,7 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -14,28 +13,24 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "members")
-public class Member {
+@Table(name = "food_reviews")
+public class PlaceReview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(referencedColumnName = "id")
+    private Member member;
 
-    @Column(nullable = false)
-    private String password;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(referencedColumnName = "id")
+    private Place place;
 
-    @Column(nullable = false, unique = true)
-    private String nickname;
-
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FoodRating> ratings;
+    @Column(nullable = false, columnDefinition = "text")
+    private String content;
 
     @CreationTimestamp
     @Column(nullable = false)

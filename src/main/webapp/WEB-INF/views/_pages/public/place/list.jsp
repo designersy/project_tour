@@ -12,7 +12,7 @@
     <hr class="my-0"/>
     <div class="container">
         <header class="page-subject mb-4 py-5">
-            <h3 class="m-0">맛집 정보</h3>
+            <h3 class="m-0">관광명소 정보</h3>
             <p class="mb-0 mt-1 text-secondary">서울시와 서울유람 그리고 관광객 분들께서 추천하는 맛집을 소개합니다.</p>
         </header>
         <main class="page-content">
@@ -24,7 +24,6 @@
                             <option selected>검색 유형</option>
                             <option value="name" <c:if test="${type eq 'name'}"> selected="selected" </c:if>>상호(명칭)</option>
                             <option value="local" <c:if test="${type eq 'local'}"> selected="selected" </c:if>>주소(지역)</option>
-                            <option value="food" <c:if test="${type eq 'food'}"> selected="selected" </c:if>>대표메뉴</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-8">
@@ -42,13 +41,13 @@
                     <nav class="items-sorter">
                         <ul class="nav">
                             <li class="nav-item">
-                                <a href="<c:url value="/food?t=${type}&s=${search}&a=&p=${currentPage}"/>">기본 정렬</a>
+                                <a href="<c:url value="/place?t=${type}&s=${search}&a=&p=${currentPage}"/>">기본 정렬</a>
                             </li>
                             <li class="nav-item">
-                                <a href="<c:url value="/food?t=${type}&s=${search}&a=rating&p=${currentPage}"/>">별점 높은순 정렬</a>
+                                <a href="<c:url value="/place?t=${type}&s=${search}&a=rating&p=${currentPage}"/>">별점 높은순 정렬</a>
                             </li>
                             <li class="nav-item">
-                                <a href="<c:url value="/food?t=${type}&s=${search}&a=review&p=${currentPage}"/>">리뷰 많은순 정렬</a>
+                                <a href="<c:url value="/place?t=${type}&s=${search}&a=review&p=${currentPage}"/>">리뷰 많은순 정렬</a>
                             </li>
                         </ul>
                     </nav>
@@ -89,17 +88,17 @@
                             <ul>
                                 <c:if test="${currentPage gt 1}">
                                     <li>
-                                        <a href="<c:url value="/food?p=${currentPage - 1}&s=${search}&t=${type}&a=${sort}"/>">이전</a>
+                                        <a href="<c:url value="/place?p=${currentPage - 1}&s=${search}&t=${type}&a=${sort}"/>">이전</a>
                                     </li>
                                 </c:if>
                                 <c:forEach var="page" begin="${start}" end="${end}">
                                     <li>
-                                        <a href="<c:url value="/food?p=${page}&s=${search}&t=${type}&a=${sort}"/>">${page}</a>
+                                        <a href="<c:url value="/place?p=${page}&s=${search}&t=${type}&a=${sort}"/>">${page}</a>
                                     </li>
                                 </c:forEach>
                                 <c:if test="${currentPage lt totalPages}">
                                     <li>
-                                        <a href="<c:url value="/food?p=${currentPage + 1}&s=${search}&t=${type}&a=${sort}"/>">다음</a>
+                                        <a href="<c:url value="/place?p=${currentPage + 1}&s=${search}&t=${type}&a=${sort}"/>">다음</a>
                                     </li>
                                 </c:if>
                             </ul>

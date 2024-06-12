@@ -4,7 +4,8 @@
     outline: none !important;
 }
 
-h1.brand {
+h1.brand,
+strong.brand{
     width: 96px;
     height: 40px;
     margin: 0;
@@ -14,10 +15,16 @@ h1.brand {
     text-indent: -9999px;
     overflow: hidden;
 }
-h1.brand.brand-default {
+h1.brand.brand-default,
+strong.brand.brand-default {
     background-image: url('../images/logo_default.svg');
 }
-h1.brand > a {
+h1.brand.brand-white,
+strong.brand.brand-white {
+    background-image: url('../images/logo_white.svg');
+}
+h1.brand > a,
+strong.brand > a {
     display: block;
 }
 
@@ -26,4 +33,10 @@ header.primary-header section.navigation ul > li > a {
     font-weight: 600;
     color: #1b3354;
     letter-spacing: -0.04rem;
+}
+
+footer > p {
+    font-size: 0.8rem;
+    color: #ffffff;
+    opacity: 0.64;
 }

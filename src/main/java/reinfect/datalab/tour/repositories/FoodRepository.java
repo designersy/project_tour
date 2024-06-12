@@ -16,6 +16,8 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
     @Query(value = "SELECT * FROM foods order by RAND() limit 9",nativeQuery = true)
     List<Food> findLatestRandom();
 
+    List<Food> findTop10OrderByOrderByIdDesc();
+
     Page<Food> findAllByOrderByIdDesc(Pageable pageable);
     Page<Food> findAllByNameContainingOrderByIdDesc(String name, Pageable pageable);
     Page<Food> findAllByNewAddressContainingOrderByIdDesc(String newAddress, Pageable pageable);

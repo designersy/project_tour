@@ -25,4 +25,9 @@ public class FoodController {
         return "_pages/public/food/list";
     }
 
+    @GetMapping("/management/food")
+    public String managementFood() {
+        return "_pages/management/food/list";
+    }
+
 }
