@@ -1,0 +1,29 @@
+* {
+    font-family: 'SUIT', sans-serif;
+    word-break: keep-all;
+    outline: none !important;
+}
+
+h1.brand {
+    width: 96px;
+    height: 40px;
+    margin: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    text-indent: -9999px;
+    overflow: hidden;
+}
+h1.brand.brand-default {
+    background-image: url('../images/logo_default.svg');
+}
+h1.brand > a {
+    display: block;
+}
+
+header.primary-header section.navigation ul > li > a {
+    font-size: 0.96rem;
+    font-weight: 600;
+    color: #1b3354;
+    letter-spacing: -0.04rem;
+}
