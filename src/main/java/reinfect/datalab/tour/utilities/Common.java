@@ -36,7 +36,7 @@ public class Common {
         return new String(fileBytes);
     }
 
-    public Map<String, Object> paginate(int currentPage, Page<?> items, String search, String type) {
+    public Map<String, Object> paginate(int currentPage, Page<?> items, String search, String type, String sort) {
         int totalPages = items.getTotalPages();
         int start = Math.max(1, currentPage / 10 * 10 + 1);
         int end = Math.min(start + 9, totalPages);
@@ -49,6 +49,7 @@ public class Common {
         paginatePosition.put("end", end);
         paginatePosition.put("search", search);
         paginatePosition.put("type", type);
+        paginatePosition.put("sort", sort);
 
         return paginatePosition;
     }
