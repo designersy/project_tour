@@ -9,8 +9,8 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "reviews")
-public class Review {
+@Table(name = "food_reviews")
+public class FoodReview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
