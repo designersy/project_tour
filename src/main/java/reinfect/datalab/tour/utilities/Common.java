@@ -4,7 +4,13 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -54,5 +60,43 @@ public class Common {
         return paginatePosition;
     }
 
+    public String getRestApi(String apiUrl, int timeout) throws Exception {
+        URL url = null;
+        String readLine = null;
+        StringBuilder builder = null;
+        BufferedReader reader = null;
+        HttpURLConnection connection;
+
+        try {
+            url = new URL(apiUrl);
+            connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(timeout);
+            connection.setReadTimeout(timeout);
+            connection.setRequestProperty("Accept", "application/json");
+
+            builder = new StringBuilder();
+
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+
+                while ((readLine = reader.readLine()) != null) {
+                    builder.append(readLine).append("\n");
+                }
+            } else {
+                builder.append("code: ");
+                builder.append(connection.getResponseCode()).append("\n");
+                builder.append("message: ");
+                builder.append(connection.getResponseMessage()).append("\n");
+            }
+        } catch (Exception exception) {
+            return "";
+        } finally {
+            if (reader != null) reader.close();
+        }
+
+        return builder.toString();
+    }
 
 }
