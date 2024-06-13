@@ -35,6 +35,17 @@ header.primary-header section.navigation ul > li > a {
     letter-spacing: -0.04rem;
 }
 
+div.no-data > img {
+    width: auto;
+    height: 240px;
+    margin-bottom: 1.28rem;
+    display: block;
+}
+div.no-data > p {
+    margin: 0;
+    color: #676767;
+}
+
 footer > p {
     font-size: 0.8rem;
     color: #ffffff;
