@@ -46,39 +46,39 @@ const weatherHtmlBuilderSky = (sky, pty) => {
     if (pty === '0') {
         switch (sky) {
             case '1':
-                iconAlt = '맑음';
+                iconAlt = weatherText.clear;
                 iconPath = '/assets/images/weather/weather_clear.jpg';
                 break;
 
             case '3':
-                iconAlt = '구름많음';
+                iconAlt = weatherText.lot_cloudy;
                 iconPath = '/assets/images/weather/weather_lot_cloud.jpg';
                 break;
 
             case '4':
-                iconAlt = '흐림';
+                iconAlt = weatherText.cloudy;
                 iconPath = '/assets/images/weather/weather_cloudy.jpg';
                 break;
         }
     } else {
         switch (pty) {
             case '1':
-                iconAlt = '비';
+                iconAlt = weatherText.rain;
                 iconPath = '/assets/images/weather/weather_rain.jpg';
                 break;
 
             case '2':
-                iconAlt = '비/눈'
+                iconAlt = weatherText.rain_snow;
                 iconPath = '/assets/images/weather/weather_rain_snow.jpg';
                 break;
 
             case '3':
-                iconAlt = '눈'
+                iconAlt = weatherText.snow;
                 iconPath = '/assets/images/weather/weather_snow.jpg';
                 break;
 
             case '4':
-                iconAlt = '소나기'
+                iconAlt = weatherText.scurry;
                 iconPath = '/assets/images/weather/weather_rain.jpg';
                 break;
         }
@@ -128,9 +128,9 @@ const convertSkyToText = (sky) => {
     let skyInformation;
 
     switch(sky) {
-        case '1': skyInformation = '맑음'; break;
-        case '3': skyInformation = '구름많음'; break;
-        case '4': skyInformation = '구름'; break;
+        case '1': skyInformation = weatherText.clear; break;
+        case '3': skyInformation = weatherText.lot_cloudy; break;
+        case '4': skyInformation = weatherText.cloudy; break;
     }
 
     return skyInformation;
@@ -141,10 +141,10 @@ const convertPtyToText = (pty) => {
 
     switch (pty) {
         case '0': ptyInformation = ''; break;
-        case '1': ptyInformation = '비'; break;
-        case '2': ptyInformation = '비/눈'; break;
-        case '3': ptyInformation = '눈'; break;
-        case '4': ptyInformation = '소나기'; break;
+        case '1': ptyInformation = weatherText.rain; break;
+        case '2': ptyInformation = weatherText.rain_snow; break;
+        case '3': ptyInformation = weatherText.snow; break;
+        case '4': ptyInformation = weatherText.scurry; break;
     }
 
     return ptyInformation;
