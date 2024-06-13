@@ -34,8 +34,17 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FoodRating> ratings;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    private List<FoodRating> foodRatings;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    private List<FoodReview> foodReviews;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    private List<PlaceRating> placeRatings;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    private List<PlaceReview> placeReviews;
 
     @CreationTimestamp
     @Column(nullable = false)
