@@ -1,5 +1,9 @@
 package reinfect.datalab.tour.utilities;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,39 +17,47 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class Uploader {
 
-    private static final String UPLOAD_PATH = "/Users/isuyeon/Documents/Project/uploads/project_tour/";
+    private final AmazonS3 amazonS3;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     private static final String[] ALLOW_UPLOAD = {
         "jpg", "gif", "png", "svg"
     };
 
-    public Map<String, Object> uploadFile(MultipartFile file, String directory) throws IOException {
+    public Map<String, Object> uploadS3(MultipartFile file, String directory) throws IOException {
+        if (file.isEmpty()) {
+            throw new IOException("파일을 첨부해 주십시오.");
+        }
+
+        if (Objects.equals(file.getOriginalFilename(), "..")) {
+            throw new IOException("유효한 파일을 첨부해 주십시오.");
+        }
+
         Map<String, Object> response = new HashMap<>();
 
-        if (file.isEmpty()) {
-            throw new IOException("첨부할 파일을 등록해 주십시오.");
-        }
-
+        String originalFileName = file.getOriginalFilename();
         String extension = getFileExtension(Objects.requireNonNull(file.getOriginalFilename()));
         String fileName = Paths.get(Objects.requireNonNull(file.getOriginalFilename())).getFileName().toString();
-        String uploadFileName = UUID.randomUUID().toString();
+        String uploadFileName = directory + "/" + UUID.randomUUID().toString() + "." + extension;
 
-        if (fileName.contains("..")) {
-            throw new IOException("올바른 파일을 등록해 주십시오.");
+        if (extensionContains(extension)) {
+            throw new IOException("첨부 가능한 파일 유형이 아닙니다.");
         }
 
-        if (!extensionContains(extension)) {
-            throw new IOException("첨부할 수 있는 파일 유형이 아닙니다.");
-        }
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(file.getSize());
+        metadata.setContentType(file.getContentType());
 
-        Path path = Paths.get(UPLOAD_PATH + directory + "/" + uploadFileName);
-        Files.createDirectories(path.getParent());
+        amazonS3.putObject(bucket, uploadFileName, file.getInputStream(), metadata);
 
         response.put("originalFileName", file.getOriginalFilename());
-        response.put("uploadedFileName", uploadFileName);
-        response.put("path", path + directory);
+        response.put("uploadedFileName", amazonS3.getUrl(bucket, uploadFileName).toString());
+        response.put("path", "");
         response.put("size", file.getSize());
 
         return response;
