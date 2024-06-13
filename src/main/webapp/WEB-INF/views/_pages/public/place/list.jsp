@@ -16,7 +16,7 @@
             <p class="mb-0 mt-1 text-secondary">서울시와 서울유람 그리고 관광객 분들께서 추천하는 맛집을 소개합니다.</p>
         </header>
         <main class="page-content">
-            <form:form method="get" action="/food">
+            <form:form method="get" action="/place">
                 <div class="row">
                     <div class="col-12 col-md-3">
                         <label for="t" class="form-label d-md-none">검색 유형</label>
@@ -72,7 +72,9 @@
                                 <c:otherwise>
                                 <tbody>
                                     <tr>
-                                        <td colspan="4">등록된 정보가 없습니다.</td>
+                                        <td colspan="4">
+                                            등록된 정보가 없습니다.
+                                        </td>
                                     </tr>
                                 </tbody>
                                 </c:otherwise>

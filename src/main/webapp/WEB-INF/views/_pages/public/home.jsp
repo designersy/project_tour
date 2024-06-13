@@ -9,8 +9,11 @@
 <body class="d-flex flex-column">
     <jsp:include page="../../_layouts/public/header.jsp"/>
     <jsp:include page="../../_elements/public/carousel.jsp"/>
-    fsdfsd
     <jsp:include page="../../_layouts/public/footer.jsp"/>
     <jsp:include page="../../_layouts/public/scripts.jsp"/>
+    <script>
+        let weatherData = `${weather}`;
+        console.log(weatherData);
+    </script>
 </body>
 </html>

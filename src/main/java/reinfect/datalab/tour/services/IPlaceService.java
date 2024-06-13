@@ -46,6 +46,11 @@ public class IPlaceService implements PlaceService {
     }
 
     @Override
+    public void install() {
+        int batchSize = 100;
+    }
+
+    @Override
     public void update(PlaceForm form, Long id) throws Exception {
         Place data = currentItem(id);
         String position = "{x:" + form.getPositionX() + ", y:" + form.getPositionY() + "}";

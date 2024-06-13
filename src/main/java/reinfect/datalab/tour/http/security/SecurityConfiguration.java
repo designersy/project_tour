@@ -18,7 +18,8 @@ public class SecurityConfiguration {
 
     private static final String[] ACCESS_PUBLIC = {
             "/",
-            "/food",
+            "/food/**",
+            "/place/**",
             "/management/**",
             "/assets/**",
             "/vendors/**",

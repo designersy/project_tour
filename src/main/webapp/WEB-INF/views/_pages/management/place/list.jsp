@@ -16,7 +16,7 @@
         </header>
         <div class="row">
             <div class="col">
-                <form:form method="get" action="/management/food">
+                <form:form method="get" action="/management/place">
                     <div class="row">
                         <div class="col-12 col-md-3">
                             <label for="t" class="form-label d-md-none">검색 유형</label>
@@ -24,7 +24,6 @@
                                 <option selected>검색 유형</option>
                                 <option value="name" <c:if test="${type eq 'name'}"> selected="selected" </c:if>>상호(명칭)</option>
                                 <option value="local" <c:if test="${type eq 'local'}"> selected="selected" </c:if>>주소(지역)</option>
-                                <option value="food" <c:if test="${type eq 'food'}"> selected="selected" </c:if>>대표메뉴</option>
                             </select>
                         </div>
                         <div class="col-12 col-md-7">

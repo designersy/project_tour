@@ -11,6 +11,7 @@ import java.util.Map;
 public interface PlaceService {
 
     void register(PlaceForm form);
+    void install();
     void update(PlaceForm form, Long id) throws Exception;
     void delete(Long id);
 

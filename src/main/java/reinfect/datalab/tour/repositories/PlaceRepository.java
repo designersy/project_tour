@@ -23,13 +23,13 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
     Page<Place> findAllByNameContainingOrderByIdDesc(String name, Pageable pageable);
     Page<Place> findAllByNewAddressContainingOrderByIdDesc(String newAddress, Pageable pageable);
 
-    @Query("SELECT e FROM Place e LEFT JOIN e.placeRatings r GROUP BY e.id ORDER BY COUNT(r.id) DESC")
+    @Query("SELECT e FROM Place e LEFT JOIN e.placeRatings r GROUP BY e.id ORDER BY SUM(r.score) DESC")
     Page<Place> findFilteredRatings(Pageable pageable);
 
-    @Query("SELECT e FROM Place e LEFT JOIN e.placeRatings r WHERE e.name LIKE %:keyword% GROUP BY e.id  ORDER BY COUNT(r.id) DESC")
+    @Query("SELECT e FROM Place e LEFT JOIN e.placeRatings r WHERE e.name LIKE %:keyword% GROUP BY e.id  ORDER BY SUM(r.score) DESC")
     Page<Place> findFilteredRatingsAndSearchName(@Param("keyword") String keyword, Pageable pageable);
 
-    @Query("SELECT e FROM Place e LEFT JOIN e.placeRatings r WHERE e.newAddress LIKE %:keyword% GROUP BY e.id  ORDER BY COUNT(r.id) DESC")
+    @Query("SELECT e FROM Place e LEFT JOIN e.placeRatings r WHERE e.newAddress LIKE %:keyword% GROUP BY e.id  ORDER BY SUM(r.score) DESC")
     Page<Place> findFilteredRatingsAndSearchNewAddress(@Param("keyword") String keyword, Pageable pageable);
 
 

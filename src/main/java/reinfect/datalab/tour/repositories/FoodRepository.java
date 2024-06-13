@@ -23,16 +23,17 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
     Page<Food> findAllByNewAddressContainingOrderByIdDesc(String newAddress, Pageable pageable);
     Page<Food> findAllByMainFoodContainingOrderByIdDesc(String mainFood, Pageable pageable);
 
-    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r GROUP BY e.id ORDER BY COUNT(r.id) DESC")
+    
+    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r GROUP BY e.id ORDER BY SUM(r.score) DESC")
     Page<Food> findFilteredRatings(Pageable pageable);
 
-    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r WHERE e.name LIKE %:keyword% GROUP BY e.id  ORDER BY COUNT(r.id) DESC")
+    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r WHERE e.name LIKE %:keyword% GROUP BY e.id  ORDER BY SUM(r.score) DESC")
     Page<Food> findFilteredRatingsAndSearchName(@Param("keyword") String keyword, Pageable pageable);
 
-    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r WHERE e.newAddress LIKE %:keyword% GROUP BY e.id  ORDER BY COUNT(r.id) DESC")
+    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r WHERE e.newAddress LIKE %:keyword% GROUP BY e.id  ORDER BY SUM(r.score) DESC")
     Page<Food> findFilteredRatingsAndSearchNewAddress(@Param("keyword") String keyword, Pageable pageable);
 
-    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r WHERE e.mainFood LIKE %:keyword% GROUP BY e.id  ORDER BY COUNT(r.id) DESC")
+    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r WHERE e.mainFood LIKE %:keyword% GROUP BY e.id  ORDER BY SUM(r.score) DESC")
     Page<Food> findFilteredRatingsAndSearchMainFood(@Param("keyword") String keyword, Pageable pageable);
 
 
