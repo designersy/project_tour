@@ -19,7 +19,7 @@ public class Weather {
     public String weatherData() throws Exception {
         String requestUrl = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst" +
                             "?serviceKey=" + dataPortalKey +
-                            "&pageNo=1&numOfRows=6&dataType=JSON" +
+                            "&pageNo=1&numOfRows=300&dataType=JSON" +
                             "&base_date=" + nowDate() + "&base_time=" + nowHour() + "&nx=60&ny=127";
 
         return common.getRestApi(requestUrl, 8000);
@@ -32,7 +32,7 @@ public class Weather {
     }
 
     private String nowHour() {
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now().minusHours(1L);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
         return now.format(formatter) + "00";
     }
