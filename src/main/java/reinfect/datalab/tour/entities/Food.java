@@ -25,6 +25,9 @@ public class Food {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String language;
+
     @Column(nullable = false, name = "content_url")
     private String contentUrl;
 

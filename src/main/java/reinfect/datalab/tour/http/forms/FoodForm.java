@@ -9,6 +9,8 @@ public class FoodForm {
 
     private String name;
 
+    private String language;
+
     private String contentUrl;
 
     private String address;

@@ -26,6 +26,7 @@ public class IFoodService implements FoodService {
     public void register(FoodForm form) {
         repository.save(
             Food.builder().name(form.getName())
+                          .language(form.getLanguage())
                           .contentUrl(form.getContentUrl())
                           .address(form.getAddress())
                           .newAddress(form.getNewAddress())
@@ -43,6 +44,7 @@ public class IFoodService implements FoodService {
         Food food = currentItem(id);
 
         food.setName(form.getName());
+        food.setLanguage(form.getLanguage());
         food.setContentUrl(form.getContentUrl());
         food.setAddress(form.getAddress());
         food.setNewAddress(form.getNewAddress());
