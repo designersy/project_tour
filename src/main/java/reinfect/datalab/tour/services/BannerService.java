@@ -10,8 +10,8 @@ import java.util.Map;
 public interface BannerService {
 
     void register(MultipartFile banner, BannerForm form) throws Exception;
-    void update(BannerForm form, Long id) throws Exception;
-    void delete(BannerForm form, Long id);
+    void update(MultipartFile file, BannerForm form, Long id) throws Exception;
+    void delete(Long id);
 
     Banner currentItem(Long id) throws Exception;
 

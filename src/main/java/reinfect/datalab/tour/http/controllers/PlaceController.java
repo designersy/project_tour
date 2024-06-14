@@ -28,12 +28,13 @@ public class PlaceController {
     }
 
     @GetMapping("/management/place")
-    public String managementPlace() {
-        try {
-            tour.getSeoulApiData(1, 2);
-        } catch(Exception exception) {
-
-        }
+    public String managementPlace(
+        @RequestParam(name = "p", defaultValue = "1") int page,
+        @RequestParam(name = "t", defaultValue = "") String searchType,
+        @RequestParam(name = "s", defaultValue = "") String searchWord,
+        Model model
+    ) {
+        model.addAllAttributes(service.paginatedItems(page, 30, searchType, searchWord, ""));
         return "_pages/management/place/list";
     }
 

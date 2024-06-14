@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -24,6 +23,9 @@ public class Uploader {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+
+    @Value("${cloud.aws.s3.url}")
+    private String defaultUrl;
 
     private static final String[] ALLOW_UPLOAD = {
         "jpg", "gif", "png", "svg"
@@ -40,12 +42,10 @@ public class Uploader {
 
         Map<String, Object> response = new HashMap<>();
 
-        String originalFileName = file.getOriginalFilename();
         String extension = getFileExtension(Objects.requireNonNull(file.getOriginalFilename()));
-        String fileName = Paths.get(Objects.requireNonNull(file.getOriginalFilename())).getFileName().toString();
-        String uploadFileName = directory + "/" + UUID.randomUUID().toString() + "." + extension;
+        String uploadFileName = directory + "/" + UUID.randomUUID() + "." + extension;
 
-        if (extensionContains(extension)) {
+        if (!extensionContains(extension)) {
             throw new IOException("첨부 가능한 파일 유형이 아닙니다.");
         }
 
@@ -55,9 +55,10 @@ public class Uploader {
 
         amazonS3.putObject(bucket, uploadFileName, file.getInputStream(), metadata);
 
+
         response.put("originalFileName", file.getOriginalFilename());
-        response.put("uploadedFileName", amazonS3.getUrl(bucket, uploadFileName).toString());
-        response.put("path", "");
+        response.put("uploadedFileName", defaultUrl + "/" + uploadFileName);
+        response.put("path", directory);
         response.put("size", file.getSize());
 
         return response;

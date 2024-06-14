@@ -17,16 +17,18 @@
         <c:choose>
             <c:when test="${not empty items.content}">
                 <div class="row">
-                    <div class="col-12 col-md-6">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/1920x640" class="card-img-top" alt="배너 이미지">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-sm btn-outline-secondary">수정/상세</a>
+                    <c:forEach var="item" items="${items.content}">
+                        <div class="col-12 col-md-6">
+                            <div class="card">
+                                <img src="${item.image}" class="card-img-top" alt="배너 이미지">
+                                <div class="card-body">
+                                    <h5 class="card-title">${item.subject}</h5>
+                                    <p class="card-text">${item.comment}</p>
+                                    <a href="<c:url value="/management/banner/${item.id}"/>" class="btn btn-sm btn-outline-secondary">수정/상세</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </c:forEach>
                 </div>
             </c:when>
             <c:otherwise>

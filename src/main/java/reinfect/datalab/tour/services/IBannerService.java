@@ -59,23 +59,48 @@ public class IBannerService implements BannerService {
     }
 
     @Override
-    public void update(BannerForm form, Long id) throws Exception {
+    public void update(MultipartFile file, BannerForm form, Long id) throws Exception {
+        String uploadedFileName = "";
 
+        if (!file.isEmpty()) {
+            Map<String, Object> uploaded = uploader.uploadS3(file, "/banners");
+            uploadedFileName = uploaded.get("uploadedFileName").toString();
+
+            uploadService.register(
+                    Upload.builder().original(uploaded.get("originalFileName").toString())
+                                    .uploaded(uploaded.get("uploadedFileName").toString())
+                                    .path(uploaded.get("path").toString())
+                                    .size((Long) uploaded.get("size"))
+                                    .build()
+            );
+        }
+
+        Banner data = currentItem(id);
+
+        data.setSubject(form.getSubject());
+        data.setComment(form.getComment());
+        data.setLink(form.getLink());
+
+        if (!uploadedFileName.isBlank()) data.setImage(uploadedFileName);
+
+        repository.save(data);
     }
 
     @Override
-    public void delete(BannerForm form, Long id) {
-
+    public void delete(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        }
     }
 
     @Override
     public Banner currentItem(Long id) throws Exception {
-        return null;
+        return repository.findById(id).orElseThrow(() -> new Exception("데이터가 없습니다."));
     }
 
     @Override
     public List<Banner> allItems() {
-        return List.of();
+        return repository.findAll();
     }
 
     @Override

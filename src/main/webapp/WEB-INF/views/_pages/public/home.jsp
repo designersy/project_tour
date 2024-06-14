@@ -11,16 +11,49 @@
 </head>
 <body class="d-flex flex-column">
     <jsp:include page="../../_layouts/public/header.jsp"/>
-    <jsp:include page="../../_elements/public/carousel.jsp"/>
+    <jsp:include page="../../_elements/public/carousel.jsp">
+        <jsp:param name="banners" value="${banners}"/>
+    </jsp:include>
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-8">
-                좌측 컨텐츠
+                <section class="main--latest-place">
+                    <c:choose>
+                        <c:when test="${not empty places}">
+                            <div class="row">
+                                <c:forEach var="place" items="${places}">
+                                    <div class="col-6 col-md-6 col-xl-4">
+                                        <strong>${place.name}</strong>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            등록된 명소 정보가 없습니다.
+                        </c:otherwise>
+                    </c:choose>
+                </section>
+                <section class="main--latest-food">
+                    <c:choose>
+                        <c:when test="${not empty foods}">
+                            <div class="row">
+                                <c:forEach var="food" items="${foods}">
+                                    <div class="col-6 col-md-6 col-xl-4">
+                                        <strong>${food.name}</strong>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            등록된 맛집 정보가 없습니다.
+                        </c:otherwise>
+                    </c:choose>
+                </section>
             </div>
             <div class="col-12 col-md-4">
                 <div class="row">
                     <div class="col my-3">
-                        <div class="p-3">
+                        <div class="py-3">
                             <strong>
                                 <spring:message code="main.subject.weather"/>
                             </strong>
@@ -31,7 +64,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <section class="future-weather" aria-label="future-weather"></section>
+                            <section class="future-weather border-top border-bottom border-1" aria-label="future-weather"></section>
                         </div>
                     </div>
                 </div>

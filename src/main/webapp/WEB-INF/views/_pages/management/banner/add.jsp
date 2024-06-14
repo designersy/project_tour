@@ -17,31 +17,30 @@
                 <br/><span>${error}</span>
             </c:if>
         </header>
-        <form:form method="post" action="/management/banner/${id}" modelAttribute="banner" enctype="multipart/form-data">
+        <form:form method="post" action="/management/banner" modelAttribute="banner" enctype="multipart/form-data">
             <div class="row">
-                <div class="col-12 my-3">
+                <div class="col my-3">
                     <form:label path="subject" cssClass="form-label">제목</form:label>
                     <form:input path="subject" cssClass="form-control form-control-lg"/>
                     <form:errors path="subject" cssClass="invalid-feedback d-block"/>
                 </div>
-                <div class="col-12 my-3">
+                <div class="col my-3">
                     <form:label path="comment" cssClass="form-label">내용</form:label>
                     <form:input path="comment" cssClass="form-control form-control-lg"/>
                     <form:errors path="comment" cssClass="invalid-feedback d-block"/>
                 </div>
-                <div class="col-12 my-3">
+                <div class="col my-3">
                     <form:label path="link" cssClass="form-label">연결 링크</form:label>
                     <form:input path="link" cssClass="form-control form-control-lg"/>
                     <form:errors path="link" cssClass="invalid-feedback d-block"/>
                 </div>
-                <div class="col-12 my-3">
-                    <label for="image" class="form-label">이미지 (변경 시에만 등록)</label>
+                <div class="col my-3">
+                    <label for="image" class="form-label">이미지</label>
                     <input type="file" id="image" name="image" class="form-control form-control-lg"/>
                 </div>
             </div>
             <hr/>
             <button type="submit" class="btn btn-primary">등록</button>
-            <a href="/management/banner/delete/${id}" class="btn btn-danger">삭제</a>
         </form:form>
     </div>
     <jsp:include page="../../../_layouts/management/footer.jsp"/>
