@@ -91,14 +91,17 @@ const weatherHtmlBuilderSky = (sky, pty) => {
     `;
 };
 
-const weatherHtmlBuilderInformation = (tmp, sky, pty) => {
+const weatherHtmlBuilderInformation = (tmp, sky, pty, type = 'text') => {
     let skyInformation = convertSkyToText(sky);
     let ptyInformation = convertPtyToText(pty);
+    let icon = convertIcon(sky, pty);
+
+    let innerInformation = (type === 'icon') ? `<img src="${icon}" alt="${skyInformation} ${ptyInformation}" style="width:48px; margin-bottom: 8px; display: block; height:auto;"/>` : `${skyInformation} ${ptyInformation}`;
 
     return `
-        <div class='weather--sky-information'>
-            <strong>${tmp}℃</strong>
-            <p class="m-0">${skyInformation} ${ptyInformation}</p>
+        <div class='weather--sky-information d-flex flex-column align-items-center'>
+            <strong class="d-block">${tmp}℃</strong>
+            ${innerInformation}
         </div>
     `;
 };
@@ -112,16 +115,16 @@ const futureWeatherHtmlBuilder = (data) => {
         tmp: getWeatherDetails(getWeatherInformation(weatherData), '기온'),
     };
 
-    for (let a = 0; a < futureData.pty.length; a++) {
+    for (let a = 0; a < 4; a++) {
         let time = futureData.tmp[a].time;
         time = time.substring(0, 2) + ':' + time.substring(2, 4);
-        resultHtml += '<div class="col-6 col-md-6 col-xl-4 my-2 text-center future-information">';
+        resultHtml += '<div class="col-6 col-md-3 my-2 text-center future-information">';
         resultHtml += '<span>' + time + '</span>';
-        resultHtml += weatherHtmlBuilderInformation(futureData.tmp[a].value, futureData.sky[a].value, futureData.pty[a].value);
+        resultHtml += weatherHtmlBuilderInformation(futureData.tmp[a].value, futureData.sky[a].value, futureData.pty[a].value, 'icon');
         resultHtml += '</div>';
     }
 
-    return '<div class="p-3 mx-2 mt-4 bg-light border border-1"><div class="row">' + resultHtml + '</div></div>';
+    return '<div class="p-0 mx-2 mt-4"><div class="row">' + resultHtml + '</div></div>';
 };
 
 const convertSkyToText = (sky) => {
@@ -148,4 +151,21 @@ const convertPtyToText = (pty) => {
     }
 
     return ptyInformation;
+};
+
+const convertIcon = (sky, pty) => {
+    if (pty === '0') {
+        switch (sky) {
+            case '1': return '/assets/images/weather/weather_clear.jpg';
+            case '3': return '/assets/images/weather/weather_lot_cloud.jpg';
+            case '4': return '/assets/images/weather/weather_cloudy.jpg';
+        }
+    } else {
+        switch (pty) {
+            case '1': return '/assets/images/weather/weather_rain.jpg';
+            case '2': return '/assets/images/weather/weather_rain_snow.jpg';
+            case '3': return '/assets/images/weather/weather_snow.jpg';
+            case '4': return '/assets/images/weather/weather_rain.jpg';
+        }
+    }
 };
