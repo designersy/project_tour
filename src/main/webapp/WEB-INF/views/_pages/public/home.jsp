@@ -9,7 +9,7 @@
         <spring:message code="website.name"/>
     </title>
 </head>
-<body class="d-flex flex-column">
+<body class="d-flex flex-column h-100">
     <jsp:include page="../../_layouts/public/header.jsp"/>
     <jsp:include page="../../_elements/public/carousel.jsp">
         <jsp:param name="banners" value="${banners}"/>
@@ -29,7 +29,7 @@
                             </div>
                         </c:when>
                         <c:otherwise>
-                            등록된 명소 정보가 없습니다.
+                            <spring:message code="error.no_data"/>
                         </c:otherwise>
                     </c:choose>
                 </section>
@@ -45,7 +45,7 @@
                             </div>
                         </c:when>
                         <c:otherwise>
-                            등록된 맛집 정보가 없습니다.
+                            <spring:message code="error.no_data"/>
                         </c:otherwise>
                     </c:choose>
                 </section>
