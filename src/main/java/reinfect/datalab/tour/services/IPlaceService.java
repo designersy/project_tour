@@ -6,6 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reinfect.datalab.tour.entities.Place;
+import reinfect.datalab.tour.entities.PlaceRating;
+import reinfect.datalab.tour.entities.PlaceReview;
 import reinfect.datalab.tour.enums.LatestType;
 import reinfect.datalab.tour.http.forms.PlaceForm;
 import reinfect.datalab.tour.repositories.PlaceRepository;
@@ -74,6 +76,22 @@ public class IPlaceService implements PlaceService {
     }
 
     @Override
+    public void update(PlaceReview review, PlaceRating rating, long id) throws Exception {
+        Place data = currentItem(id);
+        List<PlaceReview> reviewList = data.getPlaceReviews();
+        List<PlaceRating> ratingList = data.getPlaceRatings();
+
+        ratingList.add(rating);
+        reviewList.add(review);
+
+        data.setPlaceReviews(reviewList);
+        data.setPlaceRatings(ratingList);
+
+        repository.save(data);
+    }
+
+
+    @Override
     public void delete(Long id) {
         if (repository.existsById(id)) {
             repository.deleteById(id);
@@ -97,30 +115,98 @@ public class IPlaceService implements PlaceService {
     }
 
     @Override
-    public Map<String, Object> paginatedItems(int page, int perPage, String searchType, String searchWord, String sort) {
-        Pageable pageable = PageRequest.of((page - 1), perPage);
-        Page<Place> items;
+    public Map<String, Object> paginatedItems(int page, int perPage, String searchType, String searchWord, String sort, String lang) {
+        Pageable pageable = PageRequest.of(page-1, perPage);
+        Page<Place> items = null;
 
-        if (sort.equals("rating") || sort.equals("review")) {
-            if (sort.equals("rating")) {
-                items = switch(searchType) {
-                    case "name" -> repository.findFilteredRatingsAndSearchName(searchWord, pageable);
-                    case "local" -> repository.findFilteredRatingsAndSearchNewAddress(searchWord, pageable);
-                    default -> repository.findFilteredRatings(pageable);
-                };
+        if (lang.equals("ko")){
+            if (sort.equals("rating") || sort.equals("review")) {
+                if (sort.equals("rating")) {
+                    items = switch(searchType) {
+                        case "name" -> repository.findFilteredRatingsAndSearchNameSpecificLanguageKo(searchWord, pageable);
+                        case "local" -> repository.findFilteredRatingsAndSearchNewAddressSpecificLanguageKo(searchWord, pageable);
+                        default -> repository.findFilteredRatingsSpecificLanguageKo(pageable);
+                    };
+                } else {
+                    items = switch(searchType) {
+                        case "name" -> repository.findFilteredReviewsAndSearchNameSpecificLanguageKo(searchWord, pageable);
+                        case "local" -> repository.findFilteredReviewsAndSearchNewAddressSpecificLanguageKo(searchWord, pageable);
+                        default -> repository.findFilteredReviewsSpecificLanguageKo(pageable);
+                    };
+                }
             } else {
                 items = switch(searchType) {
-                    case "name" -> repository.findFilteredReviewsAndSearchName(searchWord, pageable);
-                    case "local" -> repository.findFilteredReviewsAndSearchNewAddress(searchWord, pageable);
-                    default -> repository.findFilteredReviews(pageable);
+                    case "name" -> repository.findAllByNameContainingOrderByIdDescKo(searchWord, pageable);
+                    case "local" -> repository.findAllByNewAddressContainingOrderByIdDescKo(searchWord, pageable);
+                    default -> repository.findAllByOrderByIdDescKo(pageable);
                 };
             }
-        } else {
-            items = switch(searchType) {
-                case "name" -> repository.findAllByNameContainsOrderByIdDesc(searchWord, pageable);
-                case "local" -> repository.findAllByNewAddressContainsOrderByIdDesc(searchWord, pageable);
-                default -> repository.findAllByOrderByIdDesc(pageable);
-            };
+        } else if(lang.equals("en")){
+            if (sort.equals("rating") || sort.equals("review")) {
+                if (sort.equals("rating")) {
+                    items = switch(searchType) {
+                        case "name" -> repository.findFilteredRatingsAndSearchNameSpecificLanguageEn(searchWord, pageable);
+                        case "local" -> repository.findFilteredRatingsAndSearchNewAddressSpecificLanguageEn(searchWord, pageable);
+                        default -> repository.findFilteredRatingsSpecificLanguageEn(pageable);
+                    };
+                } else {
+                    items = switch(searchType) {
+                        case "name" -> repository.findFilteredReviewsAndSearchNameSpecificLanguageEn(searchWord, pageable);
+                        case "local" -> repository.findFilteredReviewsAndSearchNewAddressSpecificLanguageEn(searchWord, pageable);
+                        default -> repository.findFilteredReviewsSpecificLanguageEn(pageable);
+                    };
+                }
+            } else {
+                items = switch(searchType) {
+                    case "name" -> repository.findAllByNameContainingOrderByIdDescEn(searchWord, pageable);
+                    case "local" -> repository.findAllByNewAddressContainingOrderByIdDescEn(searchWord, pageable);
+                    default -> repository.findAllByOrderByIdDescEn(pageable);
+                };
+            }
+        } else if(lang.equals("zh")){
+            if (sort.equals("rating") || sort.equals("review")) {
+                if (sort.equals("rating")) {
+                    items = switch(searchType) {
+                        case "name" -> repository.findFilteredRatingsAndSearchNameSpecificLanguageZhCN(searchWord, pageable);
+                        case "local" -> repository.findFilteredRatingsAndSearchNewAddressSpecificLanguageZhCN(searchWord, pageable);
+                        default -> repository.findFilteredRatingsSpecificLanguageZhCN(pageable);
+                    };
+                } else {
+                    items = switch(searchType) {
+                        case "name" -> repository.findFilteredReviewsAndSearchNameSpecificLanguageZhCN(searchWord, pageable);
+                        case "local" -> repository.findFilteredReviewsAndSearchNewAddressSpecificLanguageZhCN(searchWord, pageable);
+                        default -> repository.findFilteredReviewsSpecificLanguageZhCN(pageable);
+                    };
+                }
+            } else {
+                items = switch(searchType) {
+                    case "name" -> repository.findAllByNameContainingOrderByIdDescZhCN(searchWord, pageable);
+                    case "local" -> repository.findAllByNewAddressContainingOrderByIdDescZhCN(searchWord, pageable);
+                    default -> repository.findAllByOrderByIdDescZhCN(pageable);
+                };
+            }
+        } else if(lang.equals("ja")){
+            if (sort.equals("rating") || sort.equals("review")) {
+                if (sort.equals("rating")) {
+                    items = switch(searchType) {
+                        case "name" -> repository.findFilteredRatingsAndSearchNameSpecificLanguageJa(searchWord, pageable);
+                        case "local" -> repository.findFilteredRatingsAndSearchNewAddressSpecificLanguageJa(searchWord, pageable);
+                        default -> repository.findFilteredRatingsSpecificLanguageJa(pageable);
+                    };
+                } else {
+                    items = switch(searchType) {
+                        case "name" -> repository.findFilteredReviewsAndSearchNameSpecificLanguageJa(searchWord, pageable);
+                        case "local" -> repository.findFilteredReviewsAndSearchNewAddressSpecificLanguageJa(searchWord, pageable);
+                        default -> repository.findFilteredReviewsSpecificLanguageJa(pageable);
+                    };
+                }
+            } else {
+                items = switch(searchType) {
+                    case "name" -> repository.findAllByNameContainingOrderByIdDescJa(searchWord, pageable);
+                    case "local" -> repository.findAllByNewAddressContainingOrderByIdDescJa(searchWord, pageable);
+                    default -> repository.findAllByOrderByIdDescJa(pageable);
+                };
+            }
         }
 
         return common.paginate(page, items, searchWord, searchType, sort);

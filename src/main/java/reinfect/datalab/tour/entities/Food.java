@@ -52,6 +52,9 @@ public class Food {
     @Column(nullable = false, name = "main_food")
     private String mainFood;
 
+    @Column(nullable = false)
+    private String position;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FoodRating> foodRatings;
 

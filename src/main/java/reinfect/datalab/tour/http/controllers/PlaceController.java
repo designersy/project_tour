@@ -2,17 +2,26 @@ package reinfect.datalab.tour.http.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import reinfect.datalab.tour.entities.Place;
 import reinfect.datalab.tour.http.forms.PlaceForm;
 import reinfect.datalab.tour.services.PlaceService;
 import reinfect.datalab.tour.utilities.Tour;
 
+import java.net.http.HttpHeaders;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,6 +29,7 @@ public class PlaceController {
 
     private final PlaceService service;
     private final Tour tour;
+    private LocaleResolver localeResolver;
 
     @GetMapping("/place")
     public String place(
@@ -29,7 +39,10 @@ public class PlaceController {
             @RequestParam(name = "a", defaultValue = "") String sort,
             Model model
     ) {
-        model.addAllAttributes(service.paginatedItems(page, 20, searchType, searchWord, sort));
+        String lang = LocaleContextHolder.getLocale().toString();
+
+        // lang 값 전달하는 코드 추가 필요
+        model.addAllAttributes(service.paginatedItems(page, 20, searchType, searchWord, sort, lang));
         return "_pages/public/place/list";
     }
 
@@ -42,6 +55,8 @@ public class PlaceController {
         return "_pages/public/place/detail";
     }
 
+    // localDB에 저장된 정보를 update하는 라우터
+    // detail에서 실행하여 detail로 돌아간다.
     @GetMapping("/place/update")
     public String update(Model model, @RequestParam("id") long id) throws Exception {
 
@@ -74,21 +89,21 @@ public class PlaceController {
     }
 
     @GetMapping("/place/delete")
-    public String delete(Model model, @RequestParam("id") long id) throws Exception {
+    public String delete( @RequestParam("id") long id) throws Exception {
 
         service.delete(id);
         return "redirect:/place";
     }
 
     // 데이터 추가 페이지로 가는 라우터
-    @GetMapping("/tour/insert")
+    @GetMapping("/place/insert")
     public String insertData() {
         return "_pages/public/place/insert";
     }
 
 
     // 데이터 추가
-    @PostMapping("/tour/insert")
+    @PostMapping("/place/insert")
     public String insertDataProcess(HttpServletRequest request) {
 
         PlaceForm place = new PlaceForm();
@@ -126,8 +141,8 @@ public class PlaceController {
 
         if (placeList.isEmpty()) {
             try {
-                for (int i = 0; i < 2000; i += 200) {
-                    tour.getSeoulApiData(i, i+200);
+                for (int i = 0; i < 2000; i += 4) {
+                    tour.getSeoulApiData(i, i+3);
                     if (i == 1968){ break; }
                     Thread.sleep(1000);
                 }

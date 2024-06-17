@@ -46,10 +46,10 @@ public class Place {
     @Column(nullable = false, name = "business_time", columnDefinition = "text")
     private String businessTime;
 
-    @Column(nullable = false, name = "business_day")
+    @Column(nullable = false, name = "business_day", columnDefinition = "text")
     private String businessDay;
 
-    @Column(nullable = false, name = "break_date")
+    @Column(nullable = false, name = "break_date", columnDefinition = "text")
     private String breakDate;
 
     @Column(nullable = false)

@@ -3,20 +3,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title><spring:message code="website.name"/></title>
+<title>Insert title here</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 </head>
 <body>
 <h1>데이터 추가 페이지</h1>
-	<form:form action="/tour/insert" method="post">
+	<form:form action="/place/insert" method="post">
 
 		언어: <input name="language" value="기본 데이터"> <br>
 		관광지명: <input name="name" value="기본 데이터"> <br>
@@ -30,6 +29,7 @@
 		휴무일: <input name="breakDate" value="기본 데이터"> <br>
 		교통정보: <input name="access" value="기본 데이터"> <br>
 		태그: <input name="tags" value="기본 데이터"> <br>
+		태그: <input name="hadicap" value="기본 데이터"> <br>
 
 		<button>데이터 추가</button>
 	</form:form>

@@ -24,6 +24,8 @@ public class IFoodService implements FoodService {
 
     @Override
     public void register(FoodForm form) {
+        String position = "{x:" + form.getPositionX() + ", y:" + form.getPositionY() + "}";
+
         repository.save(
             Food.builder().name(form.getName())
                           .language(form.getLanguage())
@@ -35,6 +37,7 @@ public class IFoodService implements FoodService {
                           .businessTime(form.getBusinessTime())
                           .access(form.getAccess())
                           .mainFood(form.getMainFood())
+                          .position(position)
                           .build()
         );
     }
@@ -66,7 +69,7 @@ public class IFoodService implements FoodService {
 
     @Override
     public Food currentItem(Long id) throws Exception {
-        return repository.findById(id).orElseThrow(() -> new Exception(common.getMessage("error.no_data")));
+        return repository.findById(id).orElseThrow(() -> new Exception("데이터가 없습니다."));
     }
 
     @Override
@@ -77,7 +80,7 @@ public class IFoodService implements FoodService {
 
     @Override
     public Map<String, Object> paginatedItems(int page, int perPage, String searchType, String searchWord, String sort) {
-        Pageable pageable = PageRequest.of(page, perPage);
+        Pageable pageable = PageRequest.of(page-1, perPage);
         Page<Food> items;
 
         if (sort.equals("rating") || sort.equals("review")) {
@@ -106,6 +109,12 @@ public class IFoodService implements FoodService {
         }
 
         return common.paginate(page, items, searchWord, searchType, sort);
+    }
+
+    @Override
+    public List<Food> findAll() {
+        List<Food> foodList = repository.findAll();
+        return foodList;
     }
 
 }

@@ -27,4 +27,8 @@ public class FoodForm {
 
     private String mainFood;
 
+    private String positionX;
+
+    private String positionY;
+
 }

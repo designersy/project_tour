@@ -3,13 +3,13 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title><spring:message code="website.name"/></title>
+<title>Insert title here</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cf2ee77b85e83b5d204b042088fcf0c3"></script>
@@ -41,12 +41,41 @@
 </div>
 
 <div>
+	<form:form action="/placeReview/insert" method="post">
+		<input type="hidden" name="id" value="${place.id}">
+		<textarea name="content" rows="2" cols="10">
+		</textarea>
+		<select name="score">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+		</select>
+		<button>리뷰 작성</button>
+	</form:form>
+</div>
+
+<div>
 	<input type="hidden" id="name" value="${place.name}">
 	<input type="hidden" id="address" value="${place.address}">
 	<input type="hidden" id="access" value="${place.access}">
 	<input type="hidden" id="telephone" value="${place.telephone}">
 	<input type="hidden" id="position" value="${place.position}">
 </div>
+
+<c:choose>
+	<c:when test="${not empty place.placeReviews}">
+		<c:forEach items="${place.placeReviews}" var="review">
+			<p>${review.content}</p>
+		</c:forEach>
+	</c:when>
+
+	<c:otherwise>
+		<p>데이터 없음</p>
+	</c:otherwise>
+</c:choose>
+
 
 <hr>
 

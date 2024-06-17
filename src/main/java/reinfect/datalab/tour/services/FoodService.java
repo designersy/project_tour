@@ -19,4 +19,5 @@ public interface FoodService {
 
     Map<String, Object> paginatedItems(int page, int perPage, String searchType, String searchWord, String sort);
 
+    List<Food> findAll();
 }
