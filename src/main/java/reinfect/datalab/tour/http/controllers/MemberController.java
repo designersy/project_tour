@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import reinfect.datalab.tour.http.forms.MemberForgetForm;
+import reinfect.datalab.tour.http.forms.MemberPasswordForm;
 import reinfect.datalab.tour.http.forms.MemberRegisterForm;
+import reinfect.datalab.tour.http.forms.MemberUpdateForm;
 import reinfect.datalab.tour.services.MemberService;
 import reinfect.datalab.tour.utilities.Common;
 
@@ -75,6 +77,34 @@ public class MemberController {
         } catch (Exception exception) {
             model.addAttribute("error", exception.getMessage());
             return "_pages/public/member/forget";
+        }
+    }
+
+    @GetMapping("/member/update")
+    public String update(Model model) {
+        try {
+            model.addAttribute("member", service.currentItemAtUsername(common.getLoginUsername()));
+            model.addAttribute("password", new MemberPasswordForm());
+            return "_pages/public/member/edit";
+        } catch (Exception exception) {
+            return "redirect:/member/logout";
+        }
+    }
+
+    @PostMapping("/member/update/information")
+    public String updateInformationProcess(
+        @ModelAttribute("member") @Valid MemberUpdateForm member,
+        BindingResult bindingResult, Model model
+    ) {
+        try {
+            if (bindingResult.hasErrors()) {
+                return "_pages/public/member/edit";
+            }
+            service.updateAtUsername(member, common.getLoginUsername());
+            return "redirect:/member/update";
+        } catch (Exception exception) {
+            model.addAttribute("error", common.getMessage("error.processing"));
+            return "redirect:/member/update";
         }
     }
 

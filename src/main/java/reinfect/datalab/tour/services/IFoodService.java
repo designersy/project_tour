@@ -66,7 +66,7 @@ public class IFoodService implements FoodService {
 
     @Override
     public Food currentItem(Long id) throws Exception {
-        return repository.findById(id).orElseThrow(() -> new Exception("데이터가 없습니다."));
+        return repository.findById(id).orElseThrow(() -> new Exception(common.getMessage("error.no_data")));
     }
 
     @Override

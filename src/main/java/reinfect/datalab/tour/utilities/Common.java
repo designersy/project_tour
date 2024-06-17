@@ -7,6 +7,9 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -127,6 +130,19 @@ public class Common {
 
     public String getLocale() {
         return String.valueOf(LocaleContextHolder.getLocale());
+    }
+
+    public String getLoginUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof UserDetails) return ((UserDetails) principal).getUsername();
+            else return principal.toString();
+        }
+
+        return null;
     }
 
 }

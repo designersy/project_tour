@@ -7,10 +7,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reinfect.datalab.tour.entities.Member;
+import reinfect.datalab.tour.enums.MemberType;
 import reinfect.datalab.tour.enums.RoleType;
 import reinfect.datalab.tour.http.forms.MemberForgetForm;
 import reinfect.datalab.tour.http.forms.MemberRegisterForm;
 import reinfect.datalab.tour.http.forms.MemberUpdateForm;
+import reinfect.datalab.tour.http.validators.ServerValidator;
 import reinfect.datalab.tour.repositories.MemberRepository;
 import reinfect.datalab.tour.utilities.Common;
 import reinfect.datalab.tour.utilities.Notification;
@@ -25,6 +27,7 @@ public class IMemberService implements MemberService {
     private final Common common;
     private final Notification notification;
     private final PasswordEncoder passwordEncoder;
+    private final ServerValidator validator;
 
     private final MemberRepository repository;
 
@@ -49,13 +52,31 @@ public class IMemberService implements MemberService {
                 roleService.add(RoleType.MANAGER, member);
             }
         } catch (DataAccessException exception) {
-            throw new Exception("가입 처리 중 문제가 발생했습니다.");
+            throw new Exception(common.getMessage("error.processing"));
         }
     }
 
     @Override
     public void update(MemberUpdateForm form, Long id) throws Exception {
 
+    }
+
+    @Override
+    public void updateAtUsername(MemberUpdateForm form, String username) throws Exception {
+        Member member = repository.findByUsername(username).orElseThrow(() -> new Exception(common.getMessage("error.no_data")));
+
+        if (!member.getNickname().equals(form.getNickname())) {
+            if (validator.isUnique(MemberType.NICKNAME, form.getNickname())) throw new Exception(common.getMessage("validator.nickname.unique"));
+        }
+
+        if (!member.getEmail().equals(form.getEmail())) {
+            if (validator.isUnique(MemberType.EMAIL, form.getEmail())) throw new Exception(common.getMessage("validator.email.unique"));
+        }
+
+        member.setNickname(form.getNickname());
+        member.setEmail(form.getNickname());
+
+        repository.save(member);
     }
 
     @Override
@@ -90,6 +111,11 @@ public class IMemberService implements MemberService {
     @Override
     public Member currentItem(Long id) throws Exception {
         return repository.findById(id).orElseThrow(() -> new Exception(common.getMessage("error.no_data")));
+    }
+
+    @Override
+    public Member currentItemAtUsername(String username) throws Exception {
+        return repository.findByUsername(username).orElseThrow(() -> new Exception(common.getMessage("error.no_data")));
     }
 
     @Override
