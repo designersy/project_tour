@@ -105,7 +105,7 @@ public class IPlaceService implements PlaceService {
 
     @Override
     public List<Place> latest(LatestType latestType) {
-        if (latestType == LatestType.RANDOM) return repository.findLatestRandom();
+        if (latestType == LatestType.RANDOM) return repository.findLatestRandom(common.getLocale());
         return repository.findTop10OrderByOrderByIdDesc();
     }
 

@@ -14,8 +14,8 @@ import java.util.List;
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, Long> {
 
-    @Query(value = "SELECT * FROM places order by RAND() limit 9",nativeQuery = true)
-    List<Place> findLatestRandom();
+    @Query("SELECT e FROM Place e where e.language = :language order by RAND() limit 9")
+    List<Place> findLatestRandom(@Param("language") String language);
 
     List<Place> findTop10OrderByOrderByIdDesc();
 
