@@ -22,7 +22,7 @@ public class Weather {
                             "&pageNo=1&numOfRows=300&dataType=JSON" +
                             "&base_date=" + nowDate() + "&base_time=" + nowHour() + "&nx=60&ny=127";
 
-        return common.getRestApi(requestUrl, 8000);
+        return common.getRestApi(requestUrl, 8000, "", "");
     }
 
     private String nowDate() {

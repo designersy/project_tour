@@ -19,6 +19,18 @@ h1.brand.brand-default,
 strong.brand.brand-default {
     background-image: url('../images/logo_default.svg');
 }
+h1.brand.brand-zh,
+strong.brand.brand-zh {
+    background-image: url('../images/logo_default_zh.svg');
+}
+h1.brand.brand-en,
+strong.brand.brand-en {
+    background-image: url('../images/logo_default_en.svg');
+}
+h1.brand.brand-ja,
+strong.brand.brand-ja {
+    background-image: url('../images/logo_default_ja.svg');
+}
 h1.brand.brand-white,
 strong.brand.brand-white {
     background-image: url('../images/logo_white.svg');

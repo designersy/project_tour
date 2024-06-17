@@ -35,9 +35,9 @@ public class SecurityLoginStrategy implements UserDetailsService {
         });
 
         return User.builder().username(username)
-                .password(data.getPassword())
-                .authorities(authorities)
-                .build();
+                             .password(data.getPassword())
+                             .authorities(authorities)
+                             .build();
     }
 
 }

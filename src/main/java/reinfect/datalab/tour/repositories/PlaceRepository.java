@@ -14,14 +14,14 @@ import java.util.List;
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, Long> {
 
-    @Query(value = "SELECT e FROM Place e order by RAND() limit 9")
+    @Query(value = "SELECT * FROM places order by RAND() limit 9",nativeQuery = true)
     List<Place> findLatestRandom();
 
     List<Place> findTop10OrderByOrderByIdDesc();
 
     Page<Place> findAllByOrderByIdDesc(Pageable pageable);
-    Page<Place> findAllByNameContainingOrderByIdDesc(String name, Pageable pageable);
-    Page<Place> findAllByNewAddressContainingOrderByIdDesc(String newAddress, Pageable pageable);
+    Page<Place> findAllByNameContainsOrderByIdDesc(String name, Pageable pageable);
+    Page<Place> findAllByNewAddressContainsOrderByIdDesc(String newAddress, Pageable pageable);
 
     @Query("SELECT e FROM Place e LEFT JOIN e.placeRatings r GROUP BY e.id ORDER BY SUM(r.score) DESC")
     Page<Place> findFilteredRatings(Pageable pageable);

@@ -2,6 +2,9 @@ package reinfect.datalab.tour.utilities;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -16,13 +19,17 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Component
+@RequiredArgsConstructor
 public class Common {
+
+    private final ResourceBundleMessageSource messageSource;
+
+    public String isEmpty(String word) {
+        return Objects.requireNonNullElse(word, "데이터 없음");
+    }
 
     public String randomString(int length) {
         StringBuilder builder = new StringBuilder();
@@ -64,7 +71,7 @@ public class Common {
         return paginatePosition;
     }
 
-    public String getRestApi(String apiUrl, int timeout) throws Exception {
+    public String getRestApi(String apiUrl, int timeout, String headerName ,String header) throws Exception {
         URL url = null;
         String readLine = null;
         StringBuilder builder = null;
@@ -79,6 +86,10 @@ public class Common {
             connection.setConnectTimeout(timeout);
             connection.setReadTimeout(timeout);
             connection.setRequestProperty("Accept", "application/json");
+
+            if (!headerName.isBlank()){
+                connection.setRequestProperty(headerName, header);
+            }
 
             builder = new StringBuilder();
 
@@ -108,6 +119,14 @@ public class Common {
         Type type = new TypeToken<Map<String, Object>>(){}.getType();
 
         return  gson.fromJson(json, type);
+    }
+
+    public String getMessage(String code) {
+        return messageSource.getMessage(code, null, LocaleContextHolder.getLocale());
+    }
+
+    public String getLocale() {
+        return String.valueOf(LocaleContextHolder.getLocale());
     }
 
 }

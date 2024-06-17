@@ -15,6 +15,8 @@ public interface PlaceService {
     void update(PlaceForm form, Long id) throws Exception;
     void delete(Long id);
 
+    List<Place> findAll();
+
     Place currentItem(Long id) throws Exception;
 
     List<Place> latest(LatestType latestType);

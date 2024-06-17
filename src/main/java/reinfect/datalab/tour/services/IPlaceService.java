@@ -92,8 +92,13 @@ public class IPlaceService implements PlaceService {
     }
 
     @Override
+    public List<Place> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
     public Map<String, Object> paginatedItems(int page, int perPage, String searchType, String searchWord, String sort) {
-        Pageable pageable = PageRequest.of(page, perPage);
+        Pageable pageable = PageRequest.of((page - 1), perPage);
         Page<Place> items;
 
         if (sort.equals("rating") || sort.equals("review")) {
@@ -112,8 +117,8 @@ public class IPlaceService implements PlaceService {
             }
         } else {
             items = switch(searchType) {
-                case "name" -> repository.findAllByNameContainingOrderByIdDesc(searchWord, pageable);
-                case "local" -> repository.findAllByNewAddressContainingOrderByIdDesc(searchWord, pageable);
+                case "name" -> repository.findAllByNameContainsOrderByIdDesc(searchWord, pageable);
+                case "local" -> repository.findAllByNewAddressContainsOrderByIdDesc(searchWord, pageable);
                 default -> repository.findAllByOrderByIdDesc(pageable);
             };
         }
