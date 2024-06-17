@@ -13,41 +13,41 @@ import java.util.List;
 @Repository
 public interface FoodRepository extends JpaRepository<Food, Long> {
 
-    @Query(value = "SELECT * FROM foods order by RAND() limit 9",nativeQuery = true)
-    List<Food> findLatestRandom();
+    @Query("SELECT e FROM Food e where e.language = :language order by RAND() limit 9")
+    List<Food> findLatestRandom(@Param("language") String language);
 
     List<Food> findTop10OrderByOrderByIdDesc();
 
-    Page<Food> findAllByOrderByIdDesc(Pageable pageable);
-    Page<Food> findAllByNameContainingOrderByIdDesc(String name, Pageable pageable);
-    Page<Food> findAllByNewAddressContainingOrderByIdDesc(String newAddress, Pageable pageable);
-    Page<Food> findAllByMainFoodContainingOrderByIdDesc(String mainFood, Pageable pageable);
+    Page<Food> findAllByLanguageOrderByIdDesc(String language, Pageable pageable);
+    Page<Food> findAllByLanguageAndNameContainingOrderByIdDesc(String language, String name, Pageable pageable);
+    Page<Food> findAllByLanguageAndNewAddressContainingOrderByIdDesc(String language, String newAddress, Pageable pageable);
+    Page<Food> findAllByLanguageAndMainFoodContainingOrderByIdDesc(String language, String mainFood, Pageable pageable);
 
     
-    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r GROUP BY e.id ORDER BY SUM(r.score) DESC")
+    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r where e.language = :language GROUP BY e.id ORDER BY SUM(r.score) DESC")
     Page<Food> findFilteredRatings(Pageable pageable);
 
-    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r WHERE e.name LIKE %:keyword% GROUP BY e.id  ORDER BY SUM(r.score) DESC")
-    Page<Food> findFilteredRatingsAndSearchName(@Param("keyword") String keyword, Pageable pageable);
+    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r WHERE e.name LIKE %:keyword% and e.language = :language GROUP BY e.id  ORDER BY SUM(r.score) DESC")
+    Page<Food> findFilteredRatingsAndSearchName(@Param("language") String language, @Param("keyword") String keyword, Pageable pageable);
 
-    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r WHERE e.newAddress LIKE %:keyword% GROUP BY e.id  ORDER BY SUM(r.score) DESC")
-    Page<Food> findFilteredRatingsAndSearchNewAddress(@Param("keyword") String keyword, Pageable pageable);
+    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r WHERE e.newAddress LIKE %:keyword% and e.language = :language GROUP BY e.id  ORDER BY SUM(r.score) DESC")
+    Page<Food> findFilteredRatingsAndSearchNewAddress(@Param("language") String language, @Param("keyword") String keyword, Pageable pageable);
 
-    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r WHERE e.mainFood LIKE %:keyword% GROUP BY e.id  ORDER BY SUM(r.score) DESC")
-    Page<Food> findFilteredRatingsAndSearchMainFood(@Param("keyword") String keyword, Pageable pageable);
+    @Query("SELECT e FROM Food e LEFT JOIN e.foodRatings r WHERE e.mainFood LIKE %:keyword% and e.language = :language GROUP BY e.id  ORDER BY SUM(r.score) DESC")
+    Page<Food> findFilteredRatingsAndSearchMainFood(@Param("language") String language, @Param("keyword") String keyword, Pageable pageable);
 
 
 
-    @Query("SELECT e FROM Food e LEFT JOIN e.foodReviews r GROUP BY e.id ORDER BY COUNT(r.id) DESC")
-    Page<Food> findFilteredReviews(Pageable pageable);
+    @Query("SELECT e FROM Food e LEFT JOIN e.foodReviews r where e.language = :language GROUP BY e.id ORDER BY COUNT(r.id) DESC")
+    Page<Food> findFilteredReviews(@Param("language") String language, Pageable pageable);
 
-    @Query("SELECT e FROM Food e LEFT JOIN e.foodReviews r WHERE e.name LIKE %:keyword% GROUP BY e.id  ORDER BY COUNT(r.id) DESC")
-    Page<Food> findFilteredReviewsAndSearchName(@Param("keyword") String keyword, Pageable pageable);
+    @Query("SELECT e FROM Food e LEFT JOIN e.foodReviews r WHERE e.name LIKE %:keyword%  and e.language = :language GROUP BY e.id  ORDER BY COUNT(r.id) DESC")
+    Page<Food> findFilteredReviewsAndSearchName(@Param("language") String language, @Param("keyword") String keyword, Pageable pageable);
 
-    @Query("SELECT e FROM Food e LEFT JOIN e.foodReviews r WHERE e.newAddress LIKE %:keyword% GROUP BY e.id  ORDER BY COUNT(r.id) DESC")
-    Page<Food> findFilteredReviewsAndSearchNewAddress(@Param("keyword") String keyword, Pageable pageable);
+    @Query("SELECT e FROM Food e LEFT JOIN e.foodReviews r WHERE e.newAddress LIKE %:keyword% and e.language = :language GROUP BY e.id  ORDER BY COUNT(r.id) DESC")
+    Page<Food> findFilteredReviewsAndSearchNewAddress(@Param("language") String language, @Param("keyword") String keyword, Pageable pageable);
 
-    @Query("SELECT e FROM Food e LEFT JOIN e.foodReviews r WHERE e.mainFood LIKE %:keyword% GROUP BY e.id  ORDER BY COUNT(r.id) DESC")
-    Page<Food> findFilteredReviewsAndSearchMainFood(@Param("keyword") String keyword, Pageable pageable);
+    @Query("SELECT e FROM Food e LEFT JOIN e.foodReviews r WHERE e.mainFood LIKE %:keyword% and e.language = :language GROUP BY e.id  ORDER BY COUNT(r.id) DESC")
+    Page<Food> findFilteredReviewsAndSearchMainFood(@Param("language") String language, @Param("keyword") String keyword, Pageable pageable);
 
 }

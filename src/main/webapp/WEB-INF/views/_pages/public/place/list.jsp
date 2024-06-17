@@ -90,9 +90,9 @@
                                     <tbody>
                                     <c:forEach items="${items.content}" var="place">
                                         <tr>
-                                            <td><a href="/place/detail?id=${place.id}">${place.name}</a></td>
-                                            <td>${place.address }</td>
-                                            <td>${place.telephone }</td>
+                                            <td><a href="/place/detail/${place.id}">${place.name}</a></td>
+                                            <td>${place.address}</td>
+                                            <td>${place.telephone}</td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>

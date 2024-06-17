@@ -122,14 +122,13 @@ public class FoodController {
             try {
                 for (int i = 0; i < 30; i += 3) {
                     tour.getMatApiData(i, i+3);
-                    if (i == 5500){ break; }
                     Thread.sleep(1000);
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
-        else {}
+
         return "redirect:/food";
     }
 

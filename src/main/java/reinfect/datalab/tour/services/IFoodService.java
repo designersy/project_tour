@@ -74,7 +74,7 @@ public class IFoodService implements FoodService {
 
     @Override
     public List<Food> latest(LatestType latestType) {
-        if (latestType == LatestType.RANDOM) return repository.findLatestRandom();
+        if (latestType == LatestType.RANDOM) return repository.findLatestRandom(common.getLocale());
         return repository.findTop10OrderByOrderByIdDesc();
     }
 
@@ -86,25 +86,25 @@ public class IFoodService implements FoodService {
         if (sort.equals("rating") || sort.equals("review")) {
             if (sort.equals("rating")) {
                 items = switch(searchType) {
-                    case "name" -> repository.findFilteredRatingsAndSearchName(searchWord, pageable);
-                    case "local" -> repository.findFilteredRatingsAndSearchNewAddress(searchWord, pageable);
-                    case "food" -> repository.findFilteredRatingsAndSearchMainFood(searchWord, pageable);
+                    case "name" -> repository.findFilteredRatingsAndSearchName(searchWord, common.getLocale(), pageable);
+                    case "local" -> repository.findFilteredRatingsAndSearchNewAddress(searchWord, common.getLocale(), pageable);
+                    case "food" -> repository.findFilteredRatingsAndSearchMainFood(searchWord, common.getLocale(), pageable);
                     default -> repository.findFilteredRatings(pageable);
                 };
             } else {
                 items = switch(searchType) {
-                    case "name" -> repository.findFilteredReviewsAndSearchName(searchWord, pageable);
-                    case "local" -> repository.findFilteredReviewsAndSearchNewAddress(searchWord, pageable);
-                    case "food" -> repository.findFilteredReviewsAndSearchMainFood(searchWord, pageable);
-                    default -> repository.findFilteredReviews(pageable);
+                    case "name" -> repository.findFilteredReviewsAndSearchName(searchWord, common.getLocale(), pageable);
+                    case "local" -> repository.findFilteredReviewsAndSearchNewAddress(searchWord, common.getLocale(), pageable);
+                    case "food" -> repository.findFilteredReviewsAndSearchMainFood(searchWord, common.getLocale(), pageable);
+                    default -> repository.findFilteredReviews(common.getLocale(), pageable);
                 };
             }
         } else {
             items = switch(searchType) {
-                case "name" -> repository.findAllByNameContainingOrderByIdDesc(searchWord, pageable);
-                case "local" -> repository.findAllByNewAddressContainingOrderByIdDesc(searchWord, pageable);
-                case "food" -> repository.findAllByMainFoodContainingOrderByIdDesc(searchWord, pageable);
-                default -> repository.findAllByOrderByIdDesc(pageable);
+                case "name" -> repository.findAllByLanguageAndNameContainingOrderByIdDesc(common.getLocale(),searchWord, pageable);
+                case "local" -> repository.findAllByLanguageAndNewAddressContainingOrderByIdDesc(common.getLocale(),searchWord, pageable);
+                case "food" -> repository.findAllByLanguageAndMainFoodContainingOrderByIdDesc(common.getLocale(),searchWord, pageable);
+                default -> repository.findAllByLanguageOrderByIdDesc(common.getLocale(),pageable);
             };
         }
 

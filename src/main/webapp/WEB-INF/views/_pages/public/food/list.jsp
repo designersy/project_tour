@@ -50,17 +50,17 @@
                     <nav class="items-sorter">
                         <ul class="nav">
                             <li class="nav-item">
-                                <a href="<c:url value="/place?t=${type}&s=${search}&a=&p=${currentPage}"/>">
+                                <a href="<c:url value="/food?t=${type}&s=${search}&a=&p=${currentPage}"/>">
                                     <spring:message code="filter.align.default"/>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<c:url value="/place?t=${type}&s=${search}&a=rating&p=${currentPage}"/>">
+                                <a href="<c:url value="/food?t=${type}&s=${search}&a=rating&p=${currentPage}"/>">
                                     <spring:message code="filter.align.score"/>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<c:url value="/place?t=${type}&s=${search}&a=review&p=${currentPage}"/>">
+                                <a href="<c:url value="/food?t=${type}&s=${search}&a=review&p=${currentPage}"/>">
                                     <spring:message code="filter.align.review"/>
                                 </a>
                             </li>
@@ -87,7 +87,15 @@
                             </thead>
                             <c:choose>
                                 <c:when test="${not empty items.content}">
-
+                                    <c:forEach items="${items.content}" var="food">
+                                        <tbody>
+                                            <tr>
+                                                <td><a href="/food/detail/${food.id}">${food.name}</a></td>
+                                                <td>${food.address}</td>
+                                                <td>${food.telephone}</td>
+                                            </tr>
+                                        </tbody>
+                                    </c:forEach>
                                 </c:when>
                                 <c:otherwise>
                                 <tbody>

@@ -56,3 +56,10 @@ function getPosition(address) {
 	
 	return position;
 }
+
+function latlon(positionString) {
+	const tempLat = positionString.substring(positionString.indexOf(":")+1, positionString.indexOf(","));
+	const tempLon = positionString.substring(positionString.lastIndexOf(":")+1, positionString.indexOf("}"));
+
+	return [tempLon, tempLat];
+}

@@ -1,19 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
-<!DOCTYPE html>
-<html>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
+	<jsp:include page="../../../_common/meta.jsp"/>
+	<jsp:include page="../../../_layouts/public/links.jsp"/>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cf2ee77b85e83b5d204b042088fcf0c3"></script>
+	<title><spring:message code="website.name"/></title>
+	<script src="<c:url value="/assets/scripts/modules.js"/>"></script>
 </head>
-<body>
+<body class="d-flex flex-column">
+<jsp:include page="../../../_layouts/public/header.jsp"/>
+<hr class="my-0"/>
+<div class="container">
+	<header class="page-subject mb-4 py-5">
+		<h3 class="m-0">
+			<spring:message code="subject.tour"/>
+		</h3>
+		<p class="mb-0 mt-1 text-secondary">
+			<spring:message code="subject.tour.description"/>
+		</p>
+	</header>
+	<main class="page-content">
 <h1>데이터 추가 페이지</h1>
 	<form:form action="/place/insert" method="post">
 
@@ -33,5 +42,7 @@
 
 		<button>데이터 추가</button>
 	</form:form>
+	</main>
+</div>
 </body>
 </html>

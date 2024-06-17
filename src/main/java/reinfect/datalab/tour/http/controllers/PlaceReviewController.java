@@ -16,10 +16,10 @@ public class PlaceReviewController {
 
     @PostMapping("/placeReview/insert")
     public String place(HttpServletRequest request) throws Exception {
-        System.out.println("들어옴");
         String content = request.getParameter("content");
-        int score = Integer.parseInt(request.getParameter("score"));
         String id = (request.getParameter("id"));
+
+        int score = Integer.parseInt(request.getParameter("score"));
 
         reviewService.register(content, score, Long.parseLong(id));
         

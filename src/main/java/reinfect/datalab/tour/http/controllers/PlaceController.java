@@ -6,10 +6,7 @@ import org.springframework.cglib.core.Local;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import reinfect.datalab.tour.entities.Place;
@@ -47,7 +44,7 @@ public class PlaceController {
     }
 
     @GetMapping("/place/detail")
-    public String tourDetail(@RequestParam(value = "id") long id, Model model) throws Exception {
+    public String tourDetail(@RequestParam(value = "id") Long id, Model model) throws Exception {
         Place place = service.currentItem(id);
 
         model.addAttribute("place", place);
@@ -55,13 +52,9 @@ public class PlaceController {
         return "_pages/public/place/detail";
     }
 
-    // localDB에 저장된 정보를 update하는 라우터
-    // detail에서 실행하여 detail로 돌아간다.
-    @GetMapping("/place/update")
-    public String update(Model model, @RequestParam("id") long id) throws Exception {
-
+    @GetMapping("/place/update/{id}")
+    public String update(Model model, @PathVariable("id") Long id) throws Exception {
         Place place = service.currentItem(id);
-
         model.addAttribute("place", place);
         return "_pages/public/place/update";
     }
