@@ -32,7 +32,7 @@ public class Weather {
     }
 
     private String nowHour() {
-        LocalDateTime now = LocalDateTime.now().minusHours(1L);
+        LocalDateTime now = LocalDateTime.now().minusHours(2L);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
         return now.format(formatter) + "00";
     }
