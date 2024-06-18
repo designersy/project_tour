@@ -1,5 +1,6 @@
 * {
     font-family: 'SUIT', sans-serif;
+<<<<<<< HEAD
     font-weight: 400;
     word-break: keep-all;
 }
@@ -11,11 +12,74 @@
 }
 .brand > h1 > a {
     display: block;
+=======
+    word-break: keep-all;
+    outline: none !important;
+}
+
+h1.brand,
+strong.brand{
+    width: 96px;
+    height: 40px;
+    margin: 0;
+>>>>>>> dev
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     text-indent: -9999px;
+<<<<<<< HEAD
 }
 .brand > h1 > a.logo-default {
     background-image: url('../images/logo_default.svg');
+=======
+    overflow: hidden;
+}
+h1.brand.brand-default,
+strong.brand.brand-default {
+    background-image: url('../images/logo_default.svg');
+}
+h1.brand.brand-zh,
+strong.brand.brand-zh {
+    background-image: url('../images/logo_default_zh.svg');
+}
+h1.brand.brand-en,
+strong.brand.brand-en {
+    background-image: url('../images/logo_default_en.svg');
+}
+h1.brand.brand-ja,
+strong.brand.brand-ja {
+    background-image: url('../images/logo_default_ja.svg');
+}
+h1.brand.brand-white,
+strong.brand.brand-white {
+    background-image: url('../images/logo_white.svg');
+}
+h1.brand > a,
+strong.brand > a {
+    display: block;
+}
+
+header.primary-header section.navigation ul > li > a {
+    font-size: 0.96rem;
+    font-weight: 600;
+    color: #1b3354;
+    letter-spacing: -0.04rem;
+}
+
+div.no-data > img {
+    width: auto;
+    height: 240px;
+    margin-bottom: 1.28rem;
+    display: block;
+}
+div.no-data > p {
+    margin: 0;
+    color: #676767;
+}
+
+footer > p {
+    font-size: 0.8rem;
+    color: #ffffff;
+    opacity: 0.64;
+>>>>>>> dev
 }
