@@ -41,7 +41,7 @@
 </div>
 
 <div>
-	<form action="/food/insert" method="post">
+	<form:form action="/FoodReview/insert" method="post">
 		<input type="hidden" name="id" value="${food.id}">
 		<textarea name="content" rows="2" cols="10">
 		</textarea>
@@ -53,7 +53,7 @@
 			<option value="5">5</option>
 		</select>
 		<button>리뷰 작성</button>
-	</form>
+	</form:form>
 </div>
 
 <div>

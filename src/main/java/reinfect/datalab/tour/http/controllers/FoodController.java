@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import reinfect.datalab.tour.entities.Food;
@@ -41,8 +42,8 @@ public class FoodController {
 
 
 
-    @GetMapping("/food/detail")
-    public String tourDetail(@RequestParam(value = "id") long id, Model model) throws Exception {
+    @GetMapping("/food/detail/{id}")
+    public String tourDetail(@PathVariable("id") long id, Model model) throws Exception {
         Food food = service.currentItem(id);
 
         model.addAttribute("food", food);
@@ -78,7 +79,7 @@ public class FoodController {
 
         System.out.println(food.getMainFood());
         service.update(food, id);
-        return "redirect:/food/detail?id=" + id;
+        return "redirect:/food/detail/" + id;
     }
 
     @GetMapping("/food/delete")

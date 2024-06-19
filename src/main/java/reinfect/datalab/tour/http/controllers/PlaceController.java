@@ -43,8 +43,8 @@ public class PlaceController {
         return "_pages/public/place/list";
     }
 
-    @GetMapping("/place/detail")
-    public String tourDetail(@RequestParam(value = "id") Long id, Model model) throws Exception {
+    @GetMapping("/place/detail/{id}")
+    public String tourDetail(@PathVariable("id") Long id, Model model) throws Exception {
         Place place = service.currentItem(id);
 
         model.addAttribute("place", place);
@@ -78,7 +78,7 @@ public class PlaceController {
         place.setHandicap(request.getParameter("handicap"));
 
         service.update(place, id);
-        return "redirect:/place/detail?id=" + id;
+        return "redirect:/place/detail/"+id;
     }
 
     @GetMapping("/place/delete")
